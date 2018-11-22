@@ -10,6 +10,8 @@ const { localStrategy, jwtStrategy } = require('./auth/auth.strategy');
 
 const { userRouter } = require('./user/user.router');
 const { authRouter } = require('./auth/auth.router');
+const { postRouter } = require('./post/post.router');
+const { commentRouter } = require('./comment/comment.router');
 
 let server;
 
@@ -18,15 +20,17 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 // Middleware
-// app.use(cors({origin: CLIENT_ORIGIN}));
 app.use(cors()); 
 app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.static('./public'));
 
 // Router setup
-app.use('/api/auth', authRouter);
-app.use('/api/user', userRouter);
+app.use('/api/auth',    authRouter);
+app.use('/api/user',    userRouter);
+app.use('/api/post',    postRouter);
+app.use('/api/comment', commentRouter);
+
 app.use('*', (req, res) => {
     res.status(HTTP_STATUS_CODES.NOT_FOUND).json({
         error: '404 Not found.'
