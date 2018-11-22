@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const { commentSchema } = require('../comment/comment.model');
 
+/****** We use embaded way to perform one to many relationship
+ * for comments. Since it wont have too many comments below.
+ */
 const postSchema = new Schema({
     title:       {type: String, required: true},
     auther:      {type: Schema.Types.ObjectId, ref: 'user'},
