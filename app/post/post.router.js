@@ -49,4 +49,18 @@ postRouter.post('/:postid/comments', jwtPassportMiddleware, (req, res) => {
         });
 });
 
+/****** get all posts and corresponding comments */
+postRouter.get('/', (req, res) => {
+    Post.find()
+        .then(posts => {
+            return res.status(HTTP_STATUS_CODES.OK).json(
+                posts.map(post => post.serialize())
+            );
+        })
+        .catch(error => {
+            return res.status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR).json(error);
+        })
+})
+
+
 module.exports = { postRouter };
